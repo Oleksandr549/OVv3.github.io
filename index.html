@@ -62,17 +62,17 @@ nav#nav.s{background:rgba(7,9,10,.85);backdrop-filter:blur(28px);border-bottom:1
 @keyframes pls{0%,100%{opacity:1;box-shadow:0 0 8px var(--g)}50%{opacity:.3;box-shadow:0 0 2px var(--g)}}
 
 /* ─── HERO ─── */
-#hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 5rem;position:relative;overflow:hidden;z-index:2}
+#hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 clamp(1.5rem,5vw,5rem);position:relative;overflow:hidden;z-index:2}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);z-index:0}
 .hero-glow-orb{position:absolute;width:900px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(61,255,143,.07) 0%,rgba(61,255,143,.02) 45%,transparent 70%);pointer-events:none;z-index:0;filter:blur(40px)}
-.hero-c{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
-.hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--m);border:1px solid var(--b);padding:.42rem 1rem;border-radius:100px;margin-bottom:2.8rem;opacity:0}
-.hero-name{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-.04em;line-height:.9;overflow:hidden;margin-bottom:2rem}
+.hero-c{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%;}
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--m);border:1px solid var(--b);padding:.42rem 1rem;border-radius:100px;margin-bottom:2.8rem;opacity:0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;letter-spacing:-.04em;line-height:.9;overflow:hidden;margin-bottom:2rem;width:100%}
 .hero-name .line{display:block;overflow:hidden}
-.hero-name .inner{display:block;font-size:clamp(4.5rem,11vw,10rem);color:var(--t)}
+.hero-name .inner{display:block;font-size:clamp(2.8rem,9vw,10rem);color:var(--t)}
 .hero-name .inner.accent{color:var(--g);text-shadow:0 0 120px rgba(61,255,143,.25)}
-.hero-sub{font-size:clamp(.95rem,1.4vw,1.1rem);color:var(--m);max-width:560px;line-height:1.75;margin-bottom:3.5rem;font-weight:300;opacity:0}
-.hero-btns{display:flex;gap:1.2rem;justify-content:center;opacity:0}
+.hero-sub{font-size:clamp(.88rem,1.8vw,1.1rem);color:var(--m);width:100%;max-width:560px;line-height:1.75;margin-bottom:3.5rem;font-weight:300;opacity:0}
+.hero-btns{display:flex;gap:1.2rem;justify-content:center;opacity:0;flex-wrap:wrap}
 .btn-g{display:inline-flex;align-items:center;gap:.7rem;background:var(--g);color:#040705;font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:100px;text-decoration:none;transition:transform .25s,box-shadow .25s;border:none;cursor:none}
 .btn-g:hover{transform:translateY(-3px);box-shadow:0 16px 60px rgba(61,255,143,.3)}
 .btn-o{display:inline-flex;align-items:center;gap:.7rem;background:transparent;color:var(--t);font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:100px;text-decoration:none;border:1px solid rgba(255,255,255,.1);transition:all .25s;cursor:none}
@@ -129,7 +129,7 @@ nav#nav.s{background:rgba(7,9,10,.85);backdrop-filter:blur(28px);border-bottom:1
 section{padding:9rem 5rem;position:relative;z-index:2}
 .stag{display:inline-flex;align-items:center;gap:.7rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);margin-bottom:1.6rem}
 .stag::before{content:'';width:22px;height:1px;background:var(--g);display:block}
-.sh{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:800;letter-spacing:-.04em;line-height:.92}
+.sh{font-family:'Syne',sans-serif;font-size:clamp(2rem,6vw,5rem);font-weight:800;letter-spacing:-.04em;line-height:.95;word-break:break-word;overflow-wrap:break-word}
 
 /* ─── ABOUT ─── */
 #about{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
@@ -240,6 +240,24 @@ section{padding:9rem 5rem;position:relative;z-index:2}
 .prog-bar-wrap{height:1px;background:var(--b);border-radius:100px}
 .prog-bar-fill{height:100%;background:linear-gradient(to right,var(--g),rgba(61,255,143,.3));border-radius:100px;width:0;transition:width .1s linear}
 
+/* ─── REVIEWS ─── */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:2}
+@media(max-width:1100px){.reviews-grid{grid-template-columns:1fr 1fr}.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:auto}}
+@media(max-width:640px){.reviews-grid{grid-template-columns:1fr}.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:auto}}
+.review-card{background:var(--bg2);border:1px solid var(--b);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:border-color .3s}
+.review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(61,255,143,.3),transparent);opacity:0;transition:opacity .3s}
+.review-card:hover{border-color:rgba(61,255,143,.25)}
+.review-card:hover::before{opacity:1}
+.review-stars{color:var(--g);font-size:1rem;letter-spacing:.1em;margin-bottom:1.2rem}
+.review-text{font-size:.92rem;color:var(--m);line-height:1.75;font-weight:300;margin-bottom:1.5rem;font-style:italic}
+.review-text strong{color:var(--t);font-weight:500;font-style:normal}
+.review-footer{display:flex;align-items:center;gap:.9rem;padding-top:1.2rem;border-top:1px solid var(--b)}
+.review-avatar{width:36px;height:36px;border-radius:50%;background:var(--gd);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;color:var(--g);flex-shrink:0}
+.review-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;color:var(--t)}
+.review-meta{font-size:.7rem;color:var(--m);margin-top:.15rem}
+.review-platform{margin-left:auto;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g);background:var(--gd);border:1px solid var(--b);padding:.2rem .6rem;border-radius:100px;white-space:nowrap}
+
 /* ─── PROJ REVEAL BUTTON ─── */
 #projReveal{position:relative;padding:5rem 5rem 8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;border-top:1px solid var(--b)}
 .reveal-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;width:100%;height:100%}
@@ -257,7 +275,7 @@ section{padding:9rem 5rem;position:relative;z-index:2}
 .wow3-orb2{position:absolute;top:50%;left:30%;transform:translate(-50%,-50%);width:400px;height:300px;background:radial-gradient(ellipse,rgba(61,255,143,.05) 0%,transparent 70%);filter:blur(40px);pointer-events:none;animation:orb2move 8s ease-in-out infinite}
 @keyframes orb2move{0%,100%{left:30%}50%{left:70%}}
 .wow3-eye{font-family:'Syne',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--m);display:block;margin-bottom:2.5rem}
-.wow3-h{font-family:'Syne',sans-serif;font-size:clamp(3.5rem,8vw,7.5rem);font-weight:800;letter-spacing:-.05em;line-height:.9;margin:0 auto;max-width:1100px}
+.wow3-h{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,8vw,7.5rem);font-weight:800;letter-spacing:-.05em;line-height:.95;margin:0 auto;max-width:1100px;word-break:break-word}
 .wow3-h .glow{color:var(--g);text-shadow:0 0 100px rgba(61,255,143,.35),0 0 200px rgba(61,255,143,.1)}
 .wow3-sub{font-size:1rem;color:var(--m);max-width:450px;margin:2.8rem auto 4rem;line-height:1.75;font-weight:300}
 .stats-strip{display:flex;justify-content:center;margin-top:7rem;border-top:1px solid var(--b);border-bottom:1px solid var(--b)}
@@ -444,7 +462,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 
 /* ── 768px: tablet portrait ── */
 @media(max-width:768px){
-  #hero{padding:0 2rem;text-align:center}
+  #hero{text-align:center}
   .hero-tag{font-size:.65rem}
   section{padding-left:2rem;padding-right:2rem;padding-top:5.5rem;padding-bottom:5.5rem}
   #skills{padding-left:2rem;padding-right:2rem}
@@ -476,8 +494,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
   /* wow */
   #wow2{height:28vh}
   #wow3{padding:6rem 2rem}
-  .wow3-h{font-size:clamp(2.8rem,7vw,4.5rem)!important}
-  .stats-strip{flex-direction:column}
+  .wow3-sub{font-size:.9rem;margin:2rem auto 3rem}
   .stat-col{max-width:100%;border-right:none;border-bottom:1px solid var(--b);padding:2rem}
   .stat-col:last-child{border:none}
   .stat-col .n{font-size:3rem}
@@ -497,11 +514,11 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
   nav#nav{padding:1rem 1.5rem}
   nav#nav.s{padding:.75rem 1.5rem}
   .nav-pill span:not(.pulse){display:none}
-
-  #hero{padding:0 1.5rem;min-height:100svh;text-align:center}
+  .hero-name .inner{display:block;font-size:clamp(2rem,8vw,8rem);color:var(--t)}
+  #hero{min-height:100svh;text-align:center}
   .hero-btns{flex-direction:column;gap:.8rem;align-items:center}
   .hero-scroll-hint{display:none}
-  .hero-tag{margin-bottom:1.8rem;font-size:.62rem}
+  .hero-tag{margin-bottom:1.8rem;font-size:.6rem;letter-spacing:.1em}
 
   section{padding-left:1.5rem;padding-right:1.5rem;padding-top:5rem;padding-bottom:5rem}
   #skills{padding-left:1.5rem;padding-right:1.5rem}
@@ -514,16 +531,17 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
   .about-badge.b2{right:-8px}
   .about-desc{font-size:.95rem}
 
+  /* reviews */
+  .review-card{padding:1.4rem}
+  .review-text{font-size:.85rem}
+
   /* skills */
-  .sk-grid{grid-template-columns:1fr;gap:1rem}
-  .sk-icon-wrap{width:40px;height:40px;font-size:1.1rem}
 
   /* wow */
   #wow1{padding:2.5rem 0}
   #wow2{height:22vh}
-  .wow2-text{font-size:clamp(2.4rem,11vw,4rem)!important}
+  .wow2-text{font-size:clamp(2.2rem,10vw,4rem)!important}
   #wow3{padding:5rem 1.5rem}
-  .wow3-h{font-size:clamp(2.2rem,8vw,3.2rem)!important}
   .wow3-sub{font-size:.9rem;margin:2rem auto 3rem}
 
   /* projects */
@@ -612,15 +630,15 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
   <div class="hero-grid"></div>
   <div class="hero-glow-orb" id="heroOrb"></div>
   <div class="hero-c">
-    <div class="hero-tag" id="heroTag"><span class="pulse"></span>Front-End Developer</div>
+    <div class="hero-tag" id="heroTag"><span class="pulse"></span>Front-End Developer · Open to Work</div>
     <div class="hero-name">
       <span class="line"><span class="inner" id="heroL1">Oleksandr</span></span>
       <span class="line"><span class="inner accent" id="heroL2">Vyshnevskyi</span></span>
     </div>
-    <p class="hero-sub" id="heroSub">I build fast, interactive and visually stunning web experiences — from landing pages to full platforms.</p>
+    <p class="hero-sub" id="heroSub">I build websites people actually enjoy using — clean, fast, and built to last.</p>
     <div class="hero-btns" id="heroBtns">
-      <a href="#projects" class="btn-g">View My Work ↓</a>
-      <a href="#contact" class="btn-o">Let's Talk →</a>
+      <a href="#projects" class="btn-g">See My Work ↓</a>
+      <a href="#contact" class="btn-o">Hire Me →</a>
     </div>
   </div>
   <div class="fi-wrap" id="fiWrap"></div>
@@ -660,15 +678,19 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 <section id="about">
   <div class="about-l">
     <div class="stag gsap-fade">About Me</div>
-    <h2 class="sh gsap-splitlines">Building the web,<br>one pixel at a time.</h2>
+    <h2 class="sh gsap-splitlines">Front-end developer<br>with an eye for detail.</h2>
     <div class="about-desc gsap-fade">
-      <p>I'm a <strong>Front-End Developer</strong> passionate about crafting <strong>interactive, pixel-perfect websites</strong> that make users stop scrolling.</p>
-      <p>With 3+ years on <strong>Fiverr and UpWork</strong>, I've delivered 38+ projects for clients worldwide — always with high ratings and zero missed deadlines.</p>
-      <p>I care about the <strong>details others miss</strong>: smooth animations, satisfying micro-interactions, and layouts that just feel right.</p>
+      <p>I'm a <strong>Front-End Developer</strong> working with clients worldwide since 2022. Landing pages, multi-page sites, animated builds, custom forms and calculators — I take on projects of any scale.</p>
+      <p>I've worked with <strong>Dreamer Studio agency</strong> and served clients across the US, Canada and Europe. I write the code, handle the design, and make sure everything works exactly as it should.</p>
+      <p>I'm 21, I care about the details, and I treat every project like it's my own.</p>
     </div>
     <div class="divider"></div>
     <div class="exp-item gsap-fade">
-      <div><div class="exp-name">Fiverr / UpWork</div><div class="exp-role">Freelance Web Developer</div></div>
+      <div><div class="exp-name">Dreamer Studio</div><div class="exp-role">Front-End Developer · Agency Collaboration</div></div>
+      <span class="exp-yr">2023 – 2024</span>
+    </div>
+    <div class="exp-item gsap-fade">
+      <div><div class="exp-name">Fiverr / UpWork</div><div class="exp-role">Freelance Front-End Developer</div></div>
       <span class="exp-yr">2022 – Present</span>
     </div>
     <div class="exp-item gsap-fade">
@@ -695,14 +717,14 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 <!-- ─── WOW 1 ─── -->
 <div id="wow1">
   <div class="wow1-track" id="wow1track">
-    <span class="wow1-item">38 Projects</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">3 Years</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">100% Quality</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">5★ Rating</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">38 Projects</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">3 Years</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">100% Quality</span><span class="wow1-sep">✦</span>
-    <span class="wow1-item">5★ Rating</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">Since 2022</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">Design to Code</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">5★ on Fiverr</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">Always On Time</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">Since 2022</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">Design to Code</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">5★ on Fiverr</span><span class="wow1-sep">✦</span>
+    <span class="wow1-item">Always On Time</span><span class="wow1-sep">✦</span>
   </div>
 </div>
 
@@ -713,7 +735,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
       <div class="stag gsap-fade">Skills & Stack</div>
       <h2 class="sh gsap-splitlines">What I bring<br>to the table</h2>
     </div>
-    <p class="skills-sub gsap-fade">A mix of technical know-how and design sensibility. I build things that look great and work flawlessly.</p>
+    <p class="skills-sub gsap-fade">HTML, CSS, JavaScript and everything that comes with it — I build whatever the front-end needs.</p>
   </div>
   <div class="sk-grid">
     <div class="sk-card wide gsap-card">
@@ -721,7 +743,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
       <div class="sk-top"><div class="sk-icon-wrap">⚡</div><span class="sk-num">01</span></div>
       <div class="sk-cat">Core · Front-End</div>
       <div class="sk-name">HTML & CSS Mastery</div>
-      <div class="sk-desc">From semantic markup to complex animations — clean, maintainable code that renders pixel-perfect across all devices and browsers. My strongest tool.</div>
+      <div class="sk-desc">My core strength. From simple layouts to complex animations and pixel-perfect responsive builds — this is where I spend most of my time and where quality shows.</div>
       <div class="sk-tags"><span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">Flexbox</span><span class="sk-tag">CSS Grid</span><span class="sk-tag">Animations</span><span class="sk-tag">SCSS</span><span class="sk-tag">Media Queries</span></div>
       <div class="sk-level"><div class="sk-level-lbl">Level <span>Expert</span></div></div>
     </div>
@@ -739,7 +761,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
       <div class="sk-top"><div class="sk-icon-wrap">🎨</div><span class="sk-num">03</span></div>
       <div class="sk-cat">Design</div>
       <div class="sk-name">UI/UX & Figma</div>
-      <div class="sk-desc">I design before I code. Wireframes, prototypes and visual systems that align with user needs.</div>
+      <div class="sk-desc">I can take your Figma file and turn it into code, or design the UI myself from scratch. Either way — you get something that looks intentional, not like a template.</div>
       <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">Prototyping</span><span class="sk-tag">UI Systems</span></div>
       <div class="sk-level"><div class="sk-level-lbl">Level <span>Proficient</span></div></div>
     </div>
@@ -784,7 +806,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
       <div class="sk-top"><div class="sk-icon-wrap">🤝</div><span class="sk-num">08</span></div>
       <div class="sk-cat">Soft Skills</div>
       <div class="sk-name">Client Communication</div>
-      <div class="sk-desc">38+ happy clients. I translate requirements into clear deliverables, on time and on budget, always.</div>
+      <div class="sk-desc">Clear briefs, honest timelines, zero ghosting. I'm always reachable, ask the right questions upfront, and make sure you know exactly where your project stands.</div>
       <div class="sk-tags"><span class="sk-tag">Freelance</span><span class="sk-tag">PM</span><span class="sk-tag">Delivery</span></div>
       <div class="sk-level"><div class="sk-level-lbl">Level <span>Advanced</span></div></div>
     </div>
@@ -795,16 +817,16 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 <div id="wow2">
   <div class="wow2-row" id="wow2r1">
     <div class="wow2-text">Clean Code</div><div class="wow2-text lit">·</div>
-    <div class="wow2-text">Great Design</div><div class="wow2-text lit">·</div>
-    <div class="wow2-text">Fast Delivery</div><div class="wow2-text lit">·</div>
+    <div class="wow2-text">Figma to Code</div><div class="wow2-text lit">·</div>
+    <div class="wow2-text">On Time</div><div class="wow2-text lit">·</div>
     <div class="wow2-text">Clean Code</div><div class="wow2-text lit">·</div>
-    <div class="wow2-text">Great Design</div>
+    <div class="wow2-text">Figma to Code</div>
   </div>
   <div class="wow2-row" id="wow2r2">
+    <div class="wow2-text">Always Reachable</div><div class="wow2-text lit">·</div>
     <div class="wow2-text">Pixel Perfect</div><div class="wow2-text lit">·</div>
-    <div class="wow2-text">Always On Time</div><div class="wow2-text lit">·</div>
+    <div class="wow2-text">Always Reachable</div><div class="wow2-text lit">·</div>
     <div class="wow2-text">Pixel Perfect</div><div class="wow2-text lit">·</div>
-    <div class="wow2-text">Always On Time</div><div class="wow2-text lit">·</div>
   </div>
 </div>
 
@@ -945,7 +967,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
   <!-- reveal button — part of projects section -->
   <div id="projReveal">
     <canvas class="reveal-canvas" id="revealCanvas"></canvas>
-    <div class="reveal-label" id="revealLabel">38+ projects completed</div>
+    <div class="reveal-label" id="revealLabel">More work on GitHub</div>
     <a href="https://github.com/oleksandr549" target="_blank" class="reveal-btn" id="revealBtn">
       View All Work
       <span class="rb-arrow">↗</span>
@@ -957,25 +979,112 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 <div id="wow3">
   <div class="wow3-orb1"></div>
   <div class="wow3-orb2"></div>
-  <span class="wow3-eye gsap-fade">What drives me</span>
-  <h2 class="wow3-h gsap-splitlines">Every pixel<br>has a <span class="glow">purpose.</span></h2>
-  <p class="wow3-sub gsap-fade">I don't just build websites. I build experiences that make users feel something — and clients get results.</p>
+  <span class="wow3-eye gsap-fade">My approach</span>
+  <h2 class="wow3-h gsap-splitlines">Good websites don't<br>happen by <span class="glow">accident.</span></h2>
+  <p class="wow3-sub gsap-fade">Every project gets the same attention — whether it's a single page or a full platform.</p>
   <a href="#contact" class="btn-g gsap-fade" style="margin:0 auto;display:inline-flex">Start a Project →</a>
   <div class="stats-strip gsap-stagger">
     <div class="stat-col"><div class="n">38+</div><div class="l">Projects Delivered</div></div>
+    <div class="stat-col"><div class="n">5.0</div><div class="l">Fiverr Rating</div></div>
     <div class="stat-col"><div class="n">3+</div><div class="l">Years of Experience</div></div>
-    <div class="stat-col"><div class="n">100%</div><div class="l">Client Satisfaction</div></div>
-    <div class="stat-col"><div class="n">∞</div><div class="l">Lines of Code</div></div>
+    <div class="stat-col"><div class="n">24h</div><div class="l">Response Time</div></div>
   </div>
 </div>
+
+<!-- ─── REVIEWS ─── -->
+<section id="reviews" style="padding-top:0">
+  <div class="stag gsap-fade">Client Reviews</div>
+  <h2 class="sh gsap-splitlines" style="margin-bottom:3.5rem">What clients<br>actually say.</h2>
+  <div class="reviews-grid gsap-stagger">
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Oleksandr truly <strong>impressed</strong> with an attention to detail and coding expertise that exceeded expectations. His proactive communication and ability to deliver on time made working with him a seamless experience. A fantastic choice in website development!"</p>
+      <div class="review-footer">
+        <div class="review-avatar">IK</div>
+        <div>
+          <div class="review-name">Igor K.</div>
+          <div class="review-meta">United States · Custom Website · 4 days</div>
+        </div>
+        <div class="review-platform">Fiverr</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Fantastic experience — the work was done with <strong>great attention to detail</strong> and exceeded my expectations. Highly recommend for anyone looking for top-quality results."</p>
+      <div class="review-footer">
+        <div class="review-avatar">AR</div>
+        <div>
+          <div class="review-name">Andrei R.</div>
+          <div class="review-meta">Canada · Custom Website · 2 days</div>
+        </div>
+        <div class="review-platform">Fiverr</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Everything went very well and smoothly. <strong>There is nothing to improve.</strong> Well done! I would recommend this guy to anyone."</p>
+      <div class="review-footer">
+        <div class="review-avatar">ID</div>
+        <div>
+          <div class="review-name">Client from Poland</div>
+          <div class="review-meta">Koszalin, Poland · Custom Website</div>
+        </div>
+        <div class="review-platform">UpWork</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Oleksandr is <strong>very nice to work with</strong>. Everything was done very quickly and the quality was very good."</p>
+      <div class="review-footer">
+        <div class="review-avatar">IV</div>
+        <div>
+          <div class="review-name">Ivan D.</div>
+          <div class="review-meta">Italy · Custom Website · 5 days · Repeat Client</div>
+        </div>
+        <div class="review-platform">Fiverr</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"<strong>Great work and very professional!</strong> Highly recommend!"</p>
+      <div class="review-footer">
+        <div class="review-avatar">SK</div>
+        <div>
+          <div class="review-name">Skip P.</div>
+          <div class="review-meta">United Kingdom · Custom Website · 3 days</div>
+        </div>
+        <div class="review-platform">Fiverr</div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Excellent work and good communication, <strong>professional approach</strong> to project. Looking forward to work in future projects!"</p>
+      <div class="review-footer">
+        <div class="review-avatar">SP</div>
+        <div>
+          <div class="review-name">Sellw P.</div>
+          <div class="review-meta">Poland · Custom Website · 9 days</div>
+        </div>
+        <div class="review-platform">Fiverr</div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- ─── CONTACT ─── -->
 <section id="contact">
   <div class="contact-wrap">
     <div class="contact-l">
       <div class="stag gsap-fade">Contact</div>
-      <h2 class="sh gsap-splitlines">Let's build<br>something great.</h2>
-      <p class="gsap-fade" style="margin-top:1.5rem">Open for freelance projects, internships and full-time opportunities. Have an idea? Let's make it real.</p>
+      <h2 class="sh gsap-splitlines">Have a project<br>in mind?</h2>
+      <p class="gsap-fade" style="margin-top:1.5rem">Got a project in mind? I'd love to hear about it. Reach out — I reply fast and keep things simple.</p>
       <a href="mailto:oleksandr.vyshnevskyi.work@gmail.com" class="c-email gsap-fade">oleksandr.vyshnevskyi.work@gmail.com</a>
       <a href="tel:+48574096470" class="c-phone gsap-fade">+48 574 096 470</a>
       <div class="soc-row gsap-stagger">
@@ -991,7 +1100,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
     <div class="gsap-fade">
       <div class="cf-g"><label class="cf-lbl">Your Name</label><input type="text" class="cf-in" placeholder="John Doe"></div>
       <div class="cf-g"><label class="cf-lbl">Email Address</label><input type="email" class="cf-in" placeholder="john@example.com"></div>
-      <div class="cf-g"><label class="cf-lbl">Project Brief</label><textarea class="cf-in" placeholder="Tell me about your project..."></textarea></div>
+      <div class="cf-g"><label class="cf-lbl">Project Brief</label><textarea class="cf-in" placeholder="Tell me about your project — what you need, when you need it, and your budget..."></textarea></div>
       <button class="cf-sub">Send Message →</button>
     </div>
   </div>
@@ -1008,7 +1117,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
     <!-- Brand -->
     <div class="foot-brand-col">
       <div class="foot-logo">OV.</div>
-      <p class="foot-tagline">Front-End Developer crafting fast, interactive &amp; pixel-perfect web experiences.</p>
+      <p class="foot-tagline">Front-End Developer. Clean code, real results, every time.</p>
       <div class="foot-avail"><span class="pulse"></span>Available for work</div>
     </div>
 
@@ -1610,56 +1719,58 @@ gsap.to('#wow2r2',{
   io.observe(marquee);
 })();
 
-/* ─── ABOUT PHOTO — SCROLL REVEAL ─── */
+/* reviews — stagger cards on scroll */
+gsap.utils.toArray('.review-card').forEach((card,i)=>{
+  gsap.fromTo(card,
+    {opacity:0, y:50, scale:.97},
+    {opacity:1, y:0,  scale:1, ease:'power3.out',
+     scrollTrigger:{trigger:'#reviews',start:'top 85%',end:`top ${50-i*4}%`,scrub:1.2}}
+  );
+});
 (function(){
   const wrap = document.getElementById('aboutPhotoWrap');
   const photo = document.getElementById('aboutPhoto');
-  const bg = wrap ? wrap.querySelector('.about-photo-bg') : null;
-  const badges = wrap ? wrap.querySelectorAll('.about-badge') : [];
   if(!wrap || !photo) return;
 
-  // photo: fade + float up from slight offset
+  // photo reveal — scrub in
   gsap.fromTo(photo,
-    { opacity: 0, y: 40, scale: 0.96, filter: 'brightness(.6) contrast(1.1)' },
-    { opacity: 1, y: 0,  scale: 1,    filter: 'brightness(.9) contrast(1.05)',
+    { opacity: 0, y: 40, scale: 0.96 },
+    { opacity: 1, y: 0,  scale: 1,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: '#about',
         start: 'top 75%',
-        end:   'top 20%',
+        end:   'top 25%',
         scrub: 1.8
       }
     }
   );
 
-  // glow ring: fade in slightly after photo
+  // glow ring — just fade in once, then let CSS spin animation take over freely
+  const bg = wrap.querySelector('.about-photo-bg');
   if(bg){
-    gsap.fromTo(bg,
-      { opacity: 0, scale: 0.85 },
-      { opacity: 1, scale: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '#about',
-          start: 'top 68%',
-          end:   'top 18%',
-          scrub: 2
-        }
+    bg.style.opacity = '0';
+    ScrollTrigger.create({
+      trigger: '#about',
+      start: 'top 65%',
+      once: true,
+      onEnter(){
+        gsap.to(bg, { opacity: 1, scale: 1, duration: 1.2, ease: 'power2.out', clearProps: 'scale' });
       }
-    );
+    });
   }
 
-  // badges: slide in from their respective sides
-  badges.forEach((badge, i) => {
+  // badges slide in once
+  wrap.querySelectorAll('.about-badge').forEach((badge, i) => {
     const isLeft = badge.classList.contains('b1');
     gsap.fromTo(badge,
-      { opacity: 0, x: isLeft ? -24 : 24, y: 10 },
-      { opacity: 1, x: 0, y: 0,
-        ease: 'power3.out',
+      { opacity: 0, x: isLeft ? -20 : 20 },
+      { opacity: 1, x: 0,
+        duration: 0.8, ease: 'power3.out', delay: i * 0.15,
         scrollTrigger: {
           trigger: '#about',
-          start: `top ${60 - i*5}%`,
-          end:   `top ${15 - i*5}%`,
-          scrub: 1.6
+          start: 'top 60%',
+          once: true
         }
       }
     );
