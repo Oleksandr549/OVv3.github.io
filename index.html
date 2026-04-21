@@ -111,7 +111,7 @@ nav#nav.s{background:rgba(7,9,10,.85);backdrop-filter:blur(28px);border-bottom:1
 }
 .fi:hover .fi-tooltip{opacity:1}
 @keyframes fiFloat{
-  0%,100%{translate:0px 0px rotate:0deg}
+  0%,100%{translate:0px 0px;rotate:0deg}
 }
 @media(max-width:640px){
   .fi-inner{width:42px;height:42px;border-radius:12px}
@@ -679,7 +679,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
   <div class="about-r gsap-fade">
     <div class="about-photo-wrap" id="aboutPhotoWrap">
       <div class="about-photo-bg"></div>
-      <img id="aboutPhoto" src="https://id-preview--869e59dd-f6a4-4545-b991-6e847b3b3965.lovable.app/images/portrait.jpg" alt="Oleksandr Vyshnevskyi">
+      <img id="aboutPhoto" src="test.png" alt="Oleksandr Vyshnevskyi">
       <div class="about-photo-overlay"></div>
     </div>
     <div class="about-dots-grid">
@@ -1672,17 +1672,17 @@ gsap.to('#wow2r2',{
   if(!wrap)return;
 
   const ICONS=[
-    {label:'HTML5',    img:'https://cdn.simpleicons.org/html5/E44D26'},
-    {label:'CSS3',     img:'https://cdn.simpleicons.org/css3/264DE4'},
-    {label:'JavaScript',img:'https://cdn.simpleicons.org/javascript/F7DF1E'},
+    {label:'HTML5',    img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'},
+    {label:'CSS3',     img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg'},
+    {label:'JavaScript',img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
     {label:'PHP',      img:'https://cdn.simpleicons.org/php/8892BF'},
-    {label:'Python',   img:'https://cdn.simpleicons.org/python/3776AB'},
-    {label:'Figma',    img:'https://cdn.simpleicons.org/figma/F24E1E'},
+    {label:'Python',   img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'},
+    {label:'Figma',    img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg'},
     {label:'GitHub',   img:'https://cdn.simpleicons.org/github/ffffff'},
-    {label:'MySQL',    img:'https://cdn.simpleicons.org/mysql/4479A1'},
-    {label:'Git',      img:'https://cdn.simpleicons.org/git/F05032'},
-    {label:'GSAP',     img:'https://cdn.simpleicons.org/greensock/88CE02'},
-    {label:'VS Code',  img:'https://cdn.simpleicons.org/visualstudiocode/007ACC'},
+    {label:'MySQL',    img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'},
+    {label:'Git',      img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
+    {label:'GSAP',     img:'https://cdn.worldvectorlogo.com/logos/gsap-greensock.svg'},
+    {label:'VS Code',  img:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg'},
     {label:'Tailwind', img:'https://cdn.simpleicons.org/tailwindcss/06B6D4'},
   ];
 
