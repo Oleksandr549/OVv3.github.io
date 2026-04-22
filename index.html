@@ -63,7 +63,10 @@ nav#nav.s{background:rgba(7,9,10,.85);backdrop-filter:blur(28px);border-bottom:1
 
 /* ─── HERO ─── */
 #hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 clamp(1.5rem,5vw,5rem);position:relative;overflow:hidden;z-index:2}
+/* ─── HERO GRID HOVER LIGHTING ─── */
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);z-index:0}
+/* overlay grid — same pattern, revealed by mouse spotlight */
+.hero-grid-lit{position:absolute;inset:0;background-image:linear-gradient(rgba(61,255,143,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(61,255,143,.55) 1px,transparent 1px);background-size:80px 80px;z-index:0;pointer-events:none;mask-image:radial-gradient(circle 0px at 50% 50%,black 0%,transparent 100%);-webkit-mask-image:radial-gradient(circle 0px at 50% 50%,black 0%,transparent 100%);transition:mask-image .05s,-webkit-mask-image .05s;opacity:0}
 .hero-glow-orb{position:absolute;width:900px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(61,255,143,.07) 0%,rgba(61,255,143,.02) 45%,transparent 70%);pointer-events:none;z-index:0;filter:blur(40px)}
 .hero-c{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%;}
 .hero-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--m);border:1px solid var(--b);padding:.42rem 1rem;border-radius:100px;margin-bottom:2.8rem;opacity:0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -164,29 +167,100 @@ section{padding:9rem 5rem;position:relative;z-index:2}
 .skills-intro-row{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:5rem}
 .skills-sub{font-size:.98rem;color:var(--m);line-height:1.7;font-weight:300;max-width:380px}
 .sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.sk-card{background:var(--bg3);border:1px solid var(--b);border-radius:20px;padding:2.5rem 2rem;position:relative;overflow:hidden;transition:border-color .4s,transform .4s;cursor:default}
-.sk-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% -20%,rgba(61,255,143,.1),transparent 65%);opacity:0;transition:opacity .5s}
-.sk-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--g),transparent);opacity:0;transition:opacity .4s}
-.sk-card:hover{border-color:rgba(61,255,143,.3);transform:translateY(-4px)}
-.sk-card:hover::before{opacity:1}
-.sk-card:hover::after{opacity:1}
+
+/* card base */
+.sk-card{
+  background:var(--bg3);
+  border:1px solid var(--b);
+  border-radius:20px;
+  padding:2.2rem 2rem 1.8rem;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .4s,transform .35s,box-shadow .4s;
+  cursor:default;
+  min-height:240px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
 .sk-card.wide{grid-column:span 2}
-.sk-card.tall{grid-row:span 2}
-.sk-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem}
-.sk-icon-wrap{width:46px;height:46px;border-radius:12px;background:var(--gd);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;transition:background .3s,box-shadow .3s}
-.sk-card:hover .sk-icon-wrap{background:rgba(61,255,143,.12);box-shadow:0 0 20px rgba(61,255,143,.15)}
-.sk-num{font-family:'Syne',sans-serif;font-size:.7rem;color:var(--m);font-weight:700;letter-spacing:.1em}
-.sk-cat{font-size:.62rem;color:var(--g);text-transform:uppercase;letter-spacing:.14em;margin-bottom:.5rem}
-.sk-name{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--t);margin-bottom:.7rem;line-height:1.1}
-.sk-desc{font-size:.82rem;color:var(--m);line-height:1.65}
-.sk-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.2rem}
-.sk-tag{font-size:.62rem;color:var(--g);background:var(--gd);border:1px solid rgba(61,255,143,.12);padding:.18rem .6rem;border-radius:100px;letter-spacing:.06em;transition:background .2s}
+
+/* hover state */
+.sk-card:hover{
+  border-color:rgba(61,255,143,.32);
+  transform:translateY(-5px);
+  box-shadow:0 16px 50px rgba(61,255,143,.06);
+}
+
+/* top green line on hover via ::after */
+.sk-card::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--g),transparent);
+  opacity:0;
+  transition:opacity .4s;
+}
+.sk-card:hover::after{opacity:1}
+
+/* subtle inner glow on hover */
+.sk-card::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 20%,rgba(61,255,143,.07),transparent 65%);
+  opacity:0;
+  transition:opacity .5s;
+}
+.sk-card:hover::before{opacity:1}
+
+/* ghost 3d icon */
+.sk-ghost{
+  position:absolute;
+  right:-10%;
+  top:50%;
+  transform:translateY(-50%) rotate(6deg) scale(1);
+  height:190%;
+  width:auto;
+  object-fit:contain;
+  opacity:.18;
+  pointer-events:none;
+  z-index:0;
+  transition:opacity .5s,transform .6s cubic-bezier(.16,1,.3,1),filter .5s;
+  filter:drop-shadow(0 8px 24px rgba(61,255,143,.12));
+}
+.sk-card.wide .sk-ghost{height:160%;right:-5%}
+.sk-card:hover .sk-ghost{
+  opacity:.38;
+  transform:translateY(-50%) rotate(3deg) scale(1.06) translateX(-10px);
+  filter:drop-shadow(0 16px 36px rgba(61,255,143,.28));
+}
+
+/* text body always above icon */
+.sk-body{position:relative;z-index:2}
+
+/* header row: category + number */
+.sk-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.sk-cat{font-size:.6rem;color:var(--g);text-transform:uppercase;letter-spacing:.16em}
+.sk-num{font-family:'Syne',sans-serif;font-size:.68rem;color:var(--m);font-weight:700;letter-spacing:.1em}
+
+/* name */
+.sk-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--t);margin-bottom:.6rem;line-height:1.1}
+.sk-card.wide .sk-name{font-size:1.35rem}
+
+/* description */
+.sk-desc{font-size:.8rem;color:var(--m);line-height:1.65;margin-bottom:1.1rem}
+
+/* footer: tags + level in one row */
+.sk-foot{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;margin-top:auto}
+.sk-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.sk-tag{font-size:.6rem;color:var(--g);background:var(--gd);border:1px solid rgba(61,255,143,.1);padding:.15rem .55rem;border-radius:100px;letter-spacing:.06em;transition:background .2s}
 .sk-card:hover .sk-tag{background:rgba(61,255,143,.12)}
-.sk-level{margin-top:1.6rem;position:relative}
-.sk-level-lbl{font-size:.6rem;color:var(--m);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.6rem;display:flex;justify-content:space-between}
-.sk-level-lbl span{color:var(--g)}
-/* SVG border trace — replaces bar */
-.sk-border-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.sk-lvl{font-size:.6rem;color:var(--m);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+.sk-lvl span{color:var(--g)}
+
+/* SVG border trace */
+.sk-border-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:3}
 .sk-border-path{fill:none;stroke:var(--g);stroke-width:1.5;opacity:.7;filter:drop-shadow(0 0 4px rgba(61,255,143,.6));stroke-dasharray:1000;stroke-dashoffset:1000;transition:stroke-dashoffset 1.6s cubic-bezier(.16,1,.3,1)}
 
 /* ─── WOW 2 — PARALLAX TEXT ─── */
@@ -240,11 +314,56 @@ section{padding:9rem 5rem;position:relative;z-index:2}
 .prog-bar-wrap{height:1px;background:var(--b);border-radius:100px}
 .prog-bar-fill{height:100%;background:linear-gradient(to right,var(--g),rgba(61,255,143,.3));border-radius:100px;width:0;transition:width .1s linear}
 
-/* ─── REVIEWS ─── */
-.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:2}
-@media(max-width:1100px){.reviews-grid{grid-template-columns:1fr 1fr}.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:auto}}
-@media(max-width:640px){.reviews-grid{grid-template-columns:1fr}.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:auto}}
+/* ─── REVIEWS — infinite scroll columns ─── */
+.reviews-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  /* fixed height + overflow hidden for the scroll effect */
+  height:520px;
+  overflow:hidden;
+  position:relative;
+}
+/* fade masks top/bottom */
+.reviews-grid::before,.reviews-grid::after{
+  content:'';
+  position:absolute;
+  left:0;right:0;
+  height:80px;
+  z-index:10;
+  pointer-events:none;
+}
+.reviews-grid::before{top:0;background:linear-gradient(to bottom,var(--bg),transparent)}
+.reviews-grid::after{bottom:0;background:linear-gradient(to top,var(--bg),transparent)}
+
+/* each column is a scrolling strip */
+.reviews-col{
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+  will-change:transform;
+}
+.reviews-col.col-0{animation:scrollUp 18s linear infinite}
+.reviews-col.col-1{animation:scrollUp 24s linear infinite;animation-delay:-8s}
+.reviews-col.col-2{animation:scrollUp 20s linear infinite;animation-delay:-14s}
+.reviews-col:hover{animation-play-state:paused}
+
+@keyframes scrollUp{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-50%)}
+}
+
+/* responsive */
+@media(max-width:1100px){
+  .reviews-grid{grid-template-columns:1fr 1fr;height:480px}
+  .reviews-col.col-2{display:none}
+}
+@media(max-width:640px){
+  .reviews-grid{grid-template-columns:1fr;height:440px}
+  .reviews-col.col-1,.reviews-col.col-2{display:none}
+}
+
+.reviews-grid .review-card:last-child:nth-child(3n+2){grid-column:auto}
 .review-card{background:var(--bg2);border:1px solid var(--b);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:border-color .3s}
 .review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(61,255,143,.3),transparent);opacity:0;transition:opacity .3s}
 .review-card:hover{border-color:rgba(61,255,143,.25)}
@@ -628,6 +747,7 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 <!-- ─── HERO ─── -->
 <section id="hero">
   <div class="hero-grid"></div>
+  <div class="hero-grid-lit" id="heroGridLit"></div>
   <div class="hero-glow-orb" id="heroOrb"></div>
   <div class="hero-c">
     <div class="hero-tag" id="heroTag"><span class="pulse"></span>Front-End Developer · Open to Work</div>
@@ -738,78 +858,119 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
     <p class="skills-sub gsap-fade">HTML, CSS, JavaScript and everything that comes with it — I build whatever the front-end needs.</p>
   </div>
   <div class="sk-grid">
+
     <div class="sk-card wide gsap-card">
       <svg class="sk-border-svg" id="sksvg0"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">⚡</div><span class="sk-num">01</span></div>
-      <div class="sk-cat">Core · Front-End</div>
-      <div class="sk-name">HTML & CSS Mastery</div>
-      <div class="sk-desc">My core strength. From simple layouts to complex animations and pixel-perfect responsive builds — this is where I spend most of my time and where quality shows.</div>
-      <div class="sk-tags"><span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">Flexbox</span><span class="sk-tag">CSS Grid</span><span class="sk-tag">Animations</span><span class="sk-tag">SCSS</span><span class="sk-tag">Media Queries</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Expert</span></div></div>
+      <img class="sk-ghost" src="html.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Core · Front-End</span><span class="sk-num">01</span></div>
+        <div class="sk-name">HTML & CSS</div>
+        <div class="sk-desc">My core strength. From simple layouts to complex animations and pixel-perfect responsive builds — this is where I spend most of my time and where quality shows.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">Flexbox</span><span class="sk-tag">Grid</span><span class="sk-tag">SCSS</span><span class="sk-tag">Animations</span></div>
+          <div class="sk-lvl">Level <span>Expert</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg1"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">🔧</div><span class="sk-num">02</span></div>
-      <div class="sk-cat">Interactivity</div>
-      <div class="sk-name">JavaScript</div>
-      <div class="sk-desc">DOM manipulation, async logic, API calls and bringing interfaces to life with smooth interactions.</div>
-      <div class="sk-tags"><span class="sk-tag">ES6+</span><span class="sk-tag">DOM</span><span class="sk-tag">Fetch API</span><span class="sk-tag">Events</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Advanced</span></div></div>
+      <img class="sk-ghost" src="js.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Interactivity</span><span class="sk-num">02</span></div>
+        <div class="sk-name">JavaScript</div>
+        <div class="sk-desc">DOM manipulation, async logic, API calls and bringing interfaces to life with smooth interactions.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">ES6+</span><span class="sk-tag">DOM</span><span class="sk-tag">Fetch</span></div>
+          <div class="sk-lvl">Level <span>Advanced</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg2"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">🎨</div><span class="sk-num">03</span></div>
-      <div class="sk-cat">Design</div>
-      <div class="sk-name">UI/UX & Figma</div>
-      <div class="sk-desc">I can take your Figma file and turn it into code, or design the UI myself from scratch. Either way — you get something that looks intentional, not like a template.</div>
-      <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">Prototyping</span><span class="sk-tag">UI Systems</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Proficient</span></div></div>
+      <img class="sk-ghost" src="figma.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Design</span><span class="sk-num">03</span></div>
+        <div class="sk-name">UI/UX & Figma</div>
+        <div class="sk-desc">Figma file to code, or design from scratch — you get something that looks intentional, not like a template.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">Prototyping</span><span class="sk-tag">UI Systems</span></div>
+          <div class="sk-lvl">Level <span>Proficient</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg3"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">⚙️</div><span class="sk-num">04</span></div>
-      <div class="sk-cat">Back-End</div>
-      <div class="sk-name">PHP & Python</div>
-      <div class="sk-desc">Server-side logic, form handling and database integration to power full web experiences.</div>
-      <div class="sk-tags"><span class="sk-tag">PHP</span><span class="sk-tag">Python</span><span class="sk-tag">REST APIs</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Intermediate</span></div></div>
+      <img class="sk-ghost" src="php.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Back-End</span><span class="sk-num">04</span></div>
+        <div class="sk-name">PHP & Python</div>
+        <div class="sk-desc">Server-side logic, form handling and database integration to power full web experiences.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">PHP</span><span class="sk-tag">Python</span><span class="sk-tag">REST APIs</span></div>
+          <div class="sk-lvl">Level <span>Intermediate</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg4"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">📦</div><span class="sk-num">05</span></div>
-      <div class="sk-cat">Tools</div>
-      <div class="sk-name">GitHub</div>
-      <div class="sk-desc">Clean commits, branching and collaboration. Every project tracked and maintainable from day one.</div>
-      <div class="sk-tags"><span class="sk-tag">Git</span><span class="sk-tag">GitHub</span><span class="sk-tag">CLI</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Proficient</span></div></div>
+      <img class="sk-ghost" src="git.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Tools</span><span class="sk-num">05</span></div>
+        <div class="sk-name">GitHub</div>
+        <div class="sk-desc">Clean commits, branching and collaboration. Every project tracked and maintainable from day one.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">Git</span><span class="sk-tag">GitHub</span><span class="sk-tag">CLI</span></div>
+          <div class="sk-lvl">Level <span>Proficient</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg5"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">🗄️</div><span class="sk-num">06</span></div>
-      <div class="sk-cat">Databases</div>
-      <div class="sk-name">Microsoft SQL</div>
-      <div class="sk-desc">Structuring, querying and managing relational databases. Solid data foundations for dynamic apps.</div>
-      <div class="sk-tags"><span class="sk-tag">SQL</span><span class="sk-tag">Queries</span><span class="sk-tag">Schema</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Intermediate</span></div></div>
+      <img class="sk-ghost" src="db.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Databases</span><span class="sk-num">06</span></div>
+        <div class="sk-name">Microsoft SQL</div>
+        <div class="sk-desc">Structuring, querying and managing relational databases. Solid data foundations for dynamic apps.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">SQL</span><span class="sk-tag">Queries</span><span class="sk-tag">Schema</span></div>
+          <div class="sk-lvl">Level <span>Intermediate</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg6"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">📱</div><span class="sk-num">07</span></div>
-      <div class="sk-cat">Approach</div>
-      <div class="sk-name">Responsive Design</div>
-      <div class="sk-desc">Mobile-first, fluid layouts that adapt seamlessly to any screen — phone, tablet or wide desktop.</div>
-      <div class="sk-tags"><span class="sk-tag">Mobile-first</span><span class="sk-tag">Cross-browser</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Expert</span></div></div>
+      <img class="sk-ghost" src="devise.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Approach</span><span class="sk-num">07</span></div>
+        <div class="sk-name">Responsive Design</div>
+        <div class="sk-desc">Mobile-first, fluid layouts that adapt seamlessly to any screen — phone, tablet or wide desktop.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">Mobile-first</span><span class="sk-tag">Cross-browser</span></div>
+          <div class="sk-lvl">Level <span>Expert</span></div>
+        </div>
+      </div>
     </div>
+
     <div class="sk-card gsap-card">
       <svg class="sk-border-svg" id="sksvg7"><rect class="sk-border-path" x="1" y="1" width="99%" height="97%" rx="19"/></svg>
-      <div class="sk-top"><div class="sk-icon-wrap">🤝</div><span class="sk-num">08</span></div>
-      <div class="sk-cat">Soft Skills</div>
-      <div class="sk-name">Client Communication</div>
-      <div class="sk-desc">Clear briefs, honest timelines, zero ghosting. I'm always reachable, ask the right questions upfront, and make sure you know exactly where your project stands.</div>
-      <div class="sk-tags"><span class="sk-tag">Freelance</span><span class="sk-tag">PM</span><span class="sk-tag">Delivery</span></div>
-      <div class="sk-level"><div class="sk-level-lbl">Level <span>Advanced</span></div></div>
+      <img class="sk-ghost" src="chat.png" alt="">
+      <div class="sk-body">
+        <div class="sk-head"><span class="sk-cat">Soft Skills</span><span class="sk-num">08</span></div>
+        <div class="sk-name">Communication</div>
+        <div class="sk-desc">Clear briefs, honest timelines, zero ghosting. Always reachable, and you always know where your project stands.</div>
+        <div class="sk-foot">
+          <div class="sk-tags"><span class="sk-tag">Freelance</span><span class="sk-tag">PM</span><span class="sk-tag">Delivery</span></div>
+          <div class="sk-lvl">Level <span>Advanced</span></div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -995,82 +1156,64 @@ footer{position:relative;z-index:2;overflow:hidden;background:var(--bg2);border-
 <section id="reviews" style="padding-top:0">
   <div class="stag gsap-fade">Client Reviews</div>
   <h2 class="sh gsap-splitlines" style="margin-bottom:3.5rem">What clients<br>actually say.</h2>
-  <div class="reviews-grid gsap-stagger">
+  <div class="reviews-grid" id="reviewsGrid">
 
-    <div class="review-card">
+    <div class="review-card" data-col="0">
       <div class="review-stars">★★★★★</div>
       <p class="review-text">"Oleksandr truly <strong>impressed</strong> with an attention to detail and coding expertise that exceeded expectations. His proactive communication and ability to deliver on time made working with him a seamless experience. A fantastic choice in website development!"</p>
       <div class="review-footer">
         <div class="review-avatar">IK</div>
-        <div>
-          <div class="review-name">Igor K.</div>
-          <div class="review-meta">United States · Custom Website · 4 days</div>
-        </div>
+        <div><div class="review-name">Igor K.</div><div class="review-meta">United States · Custom Website · 4 days</div></div>
         <div class="review-platform">Fiverr</div>
       </div>
     </div>
 
-    <div class="review-card">
+    <div class="review-card" data-col="1">
       <div class="review-stars">★★★★★</div>
       <p class="review-text">"Fantastic experience — the work was done with <strong>great attention to detail</strong> and exceeded my expectations. Highly recommend for anyone looking for top-quality results."</p>
       <div class="review-footer">
         <div class="review-avatar">AR</div>
-        <div>
-          <div class="review-name">Andrei R.</div>
-          <div class="review-meta">Canada · Custom Website · 2 days</div>
-        </div>
+        <div><div class="review-name">Andrei R.</div><div class="review-meta">Canada · Custom Website · 2 days</div></div>
         <div class="review-platform">Fiverr</div>
       </div>
     </div>
 
-    <div class="review-card">
+    <div class="review-card" data-col="2">
       <div class="review-stars">★★★★★</div>
       <p class="review-text">"Everything went very well and smoothly. <strong>There is nothing to improve.</strong> Well done! I would recommend this guy to anyone."</p>
       <div class="review-footer">
         <div class="review-avatar">ID</div>
-        <div>
-          <div class="review-name">Client from Poland</div>
-          <div class="review-meta">Koszalin, Poland · Custom Website</div>
-        </div>
+        <div><div class="review-name">Client from Poland</div><div class="review-meta">Koszalin, Poland · Custom Website</div></div>
         <div class="review-platform">UpWork</div>
       </div>
     </div>
 
-    <div class="review-card">
+    <div class="review-card" data-col="0">
       <div class="review-stars">★★★★★</div>
       <p class="review-text">"Oleksandr is <strong>very nice to work with</strong>. Everything was done very quickly and the quality was very good."</p>
       <div class="review-footer">
         <div class="review-avatar">IV</div>
-        <div>
-          <div class="review-name">Ivan D.</div>
-          <div class="review-meta">Italy · Custom Website · 5 days · Repeat Client</div>
-        </div>
+        <div><div class="review-name">Ivan D.</div><div class="review-meta">Italy · Custom Website · 5 days · Repeat Client</div></div>
         <div class="review-platform">Fiverr</div>
       </div>
     </div>
 
-    <div class="review-card">
+    <div class="review-card" data-col="1">
       <div class="review-stars">★★★★★</div>
       <p class="review-text">"<strong>Great work and very professional!</strong> Highly recommend!"</p>
       <div class="review-footer">
         <div class="review-avatar">SK</div>
-        <div>
-          <div class="review-name">Skip P.</div>
-          <div class="review-meta">United Kingdom · Custom Website · 3 days</div>
-        </div>
+        <div><div class="review-name">Skip P.</div><div class="review-meta">United Kingdom · Custom Website · 3 days</div></div>
         <div class="review-platform">Fiverr</div>
       </div>
     </div>
 
-    <div class="review-card">
+    <div class="review-card" data-col="2">
       <div class="review-stars">★★★★★</div>
       <p class="review-text">"Excellent work and good communication, <strong>professional approach</strong> to project. Looking forward to work in future projects!"</p>
       <div class="review-footer">
         <div class="review-avatar">SP</div>
-        <div>
-          <div class="review-name">Sellw P.</div>
-          <div class="review-meta">Poland · Custom Website · 9 days</div>
-        </div>
+        <div><div class="review-name">Sellw P.</div><div class="review-meta">Poland · Custom Website · 9 days</div></div>
         <div class="review-platform">Fiverr</div>
       </div>
     </div>
@@ -1719,14 +1862,66 @@ gsap.to('#wow2r2',{
   io.observe(marquee);
 })();
 
-/* reviews — stagger cards on scroll */
-gsap.utils.toArray('.review-card').forEach((card,i)=>{
-  gsap.fromTo(card,
-    {opacity:0, y:50, scale:.97},
-    {opacity:1, y:0,  scale:1, ease:'power3.out',
-     scrollTrigger:{trigger:'#reviews',start:'top 85%',end:`top ${50-i*4}%`,scrub:1.2}}
-  );
-});
+/* ─── GRID HOVER LIGHTING ─── */
+(function(){
+  const hero=document.getElementById('hero');
+  const lit=document.getElementById('heroGridLit');
+  if(!hero||!lit)return;
+
+  let active=false;
+  const R=220; // spotlight radius px
+
+  hero.addEventListener('mouseenter',()=>{
+    active=true;
+    lit.style.opacity='1';
+  });
+  hero.addEventListener('mouseleave',()=>{
+    active=false;
+    lit.style.opacity='0';
+  });
+
+  hero.addEventListener('mousemove',e=>{
+    if(!active)return;
+    const rect=hero.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const xPct=(x/rect.width*100).toFixed(2);
+    const yPct=(y/rect.height*100).toFixed(2);
+    const mask=`radial-gradient(circle ${R}px at ${xPct}% ${yPct}%, black 0%, black 55%, transparent 100%)`;
+    lit.style.maskImage=mask;
+    lit.style.webkitMaskImage=mask;
+  });
+})();
+
+/* ─── REVIEWS INFINITE SCROLL COLUMNS ─── */
+(function(){
+  const grid=document.getElementById('reviewsGrid');
+  if(!grid)return;
+
+  // collect cards per column
+  const cols=[[], [], []];
+  grid.querySelectorAll('.review-card').forEach(card=>{
+    const c=parseInt(card.dataset.col)||0;
+    cols[c].push(card);
+  });
+
+  // clear grid, build column wrappers
+  grid.innerHTML='';
+
+  cols.forEach((cards,ci)=>{
+    if(!cards.length)return;
+    const col=document.createElement('div');
+    col.className=`reviews-col col-${ci}`;
+
+    // original set
+    cards.forEach(c=>col.appendChild(c));
+    // duplicate for seamless loop
+    cards.forEach(c=>col.appendChild(c.cloneNode(true)));
+
+    grid.appendChild(col);
+  });
+})();
+
 (function(){
   const wrap = document.getElementById('aboutPhotoWrap');
   const photo = document.getElementById('aboutPhoto');
